@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # get "/first_contact_url" => "contacts#first_contact"
   # get "/second_contact_url" => "contacts#second_contact"
   # get "/third_contact_url" => "contacts#third_contact"
-  # get "/all_contact_url" => "contacts#all_contact"
+  get "/all_contact_url" => "contacts#all_contact"
   get "/contact" => "contacts#index"
   post "/contact" => "contacts#create"
   get "/contact/:id" => "contacts#show"
