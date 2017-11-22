@@ -31,7 +31,7 @@ elsif user == "2"
   params["phone_number"] = gets.chomp
   print "Please enter a bio: "
   params["bio"] = gets.chomp
-  response = Unirest.post("#{base_url}", parameters: params)
+  response = Unirest.post("#{base_url}/contact", parameters: params)
   contact = response.body
   pp contact
 elsif user == "3"

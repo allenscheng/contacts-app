@@ -1,24 +1,22 @@
 class ContactsController < ApplicationController
-  # def first_contact
-  #   contact = Contact.first
-  #   render json: contact.as_json # .as_json will display all the information. you can define all the information you want 
-  # end
-  # def second_contact
-  #   contact = Contact.second
-  #   render json: contact.as_json
-  # end  
-  # def third_contact 
-  #   contact = Contact.third
-  #   render json: contact.as_json
-  # end 
   def index 
     contacts = Contact.all
     render json: contacts.as_json
   end 
   def create
-    contact = Contact.new(first_name:params["first_name"],middle_name:params["middle_name"], last_name:params["last_name"], email:params["email"], phone_number:params["phone_number"], bio:params["bio"]) 
-    contact.save
-    render json: contact.as_json
+    contact = Contact.new(
+      first_name:params["first_name"],
+      middle_name:params["middle_name"], 
+      last_name:params["last_name"], 
+      email:params["email"], 
+      phone_number:params["phone_number"],
+      bio:params["bio"]
+      ) 
+    if contact.save
+      render json: contact.as_json
+    else
+      render json: {errors: contact.errors.full_messages}, status: :bad_request
+    end
   end
   def show
     contact = Contact.find_by(id: params["id"])
@@ -32,8 +30,11 @@ class ContactsController < ApplicationController
     contact.email = params["email"]  || contact.email
     contact.phone_number = params["phone_number"]  || contact.phone_number
     contact.bio = params["bio"] || contact.bio
-    contact.save
-    render json: contact.as_json
+    if contact.save
+      render json: contact.as_json
+    else
+      render json: {errors: contact.errors.full_messages}, status: :bad_request
+    end
   end
   def destroy
     contact_id = params["id"]
