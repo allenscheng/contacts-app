@@ -5,19 +5,26 @@ require "pp" #to print on it's own line
 
 puts "Choose an option"
 puts "1 - to view all contacts." 
+puts "  1.1 - to search a first name."
 puts "2 - to create a new contact."
 puts "3 - to view a single contact."
 puts "4 - to update a contact information."
 puts "5 - to delete a contact." 
 
-user = gets.chomp 
+user_choice = gets.chomp 
 base_url = "http://localhost:3000"
 
-if user == "1"
+if user_choice == "1"
   response = Unirest.get("#{base_url}/contact")
   contact = response.body  
   pp contact 
-elsif user == "2"
+elsif user_choice == "1.1"
+  print "Please enter the first name search: "
+  input_name_search = gets.chomp 
+  response = Unirest.get("#{base_url}/contact", parameters: {first_name_search: input_name_search})
+  contact = response.body
+  pp contact 
+elsif user_choice == "2"
   params = {}
   print "Please enter the contacts first name: "
   params["first_name"] = gets.chomp
@@ -34,13 +41,13 @@ elsif user == "2"
   response = Unirest.post("#{base_url}/contact", parameters: params)
   contact = response.body
   pp contact
-elsif user == "3"
+elsif user_choice == "3"
   print "Enter the contact id to be seen: "
   contact_id = gets.chomp
   response = Unirest.get("#{"base_url"}/contact/#{contact_id}")
   contact = response.body
   pp contact 
-elsif user == "4"
+elsif user_choice == "4"
   print "Enter the contact id that needs to be updated: " 
   params = {}
   contact_id = gets.chomp
@@ -62,7 +69,7 @@ elsif user == "4"
   response = Unirest.patch("#{base_url}/contact/#{contact_id}", parameters: params)
   contact = response.body 
   pp contact 
-elsif user == "5"
+elsif user_choice == "5"
   print "Enter the contact to delete: "
   contact_id = gets.chomp 
   response = Unirest.delete("#{base_url}/contact/#{contact_id}")
