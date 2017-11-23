@@ -6,6 +6,10 @@ require "pp" #to print on it's own line
 puts "Choose an option"
 puts "1 - to view all contacts." 
 puts "  1.1 - to search a first name."
+puts "  1.2 - to search a middle name."
+puts "  1.3 - to search a last name."
+puts "  1.4 - to search an email."
+puts "  1.5 - to search a phone number."
 puts "2 - to create a new contact."
 puts "3 - to view a single contact."
 puts "4 - to update a contact information."
@@ -19,11 +23,35 @@ if user_choice == "1"
   contact = response.body  
   pp contact 
 elsif user_choice == "1.1"
-  print "Please enter the first name search: "
+  print "Please enter the first name to search: "
   input_name_search = gets.chomp 
   response = Unirest.get("#{base_url}/contact", parameters: {first_name_search: input_name_search})
   contact = response.body
   pp contact 
+elsif user_choice == "1.2"
+  print "Please enter the middle name to search: "
+  input_name_search = gets.chomp 
+  response = Unirest.get("#{base_url}/contact", parameters: {middle_name_search: input_name_search})
+  contact = response.body
+  pp contact
+elsif user_choice == "1.3"
+  print "Please enter the last name to search: "
+  input_name_search = gets.chomp 
+  response = Unirest.get("#{base_url}/contact", parameters: {last_name_search: input_name_search})
+  contact = response.body
+  pp contact
+elsif user_choice == "1.4"
+  print "Please enter the email to search: "
+  input_email_search = gets.chomp 
+  response = Unirest.get("#{base_url}/contact", parameters: {email_search: input_email_search})
+  contact = response.body
+  pp contact 
+elsif user_choice == "1.5"
+  print "Please enter the phone number to search: "
+  input_phone_search = gets.chomp 
+  response = Unirest.get("#{base_url}/contact", parameters: {phone_number_search: input_phone_search})
+  contact = response.body
+  pp contact
 elsif user_choice == "2"
   params = {}
   print "Please enter the contacts first name: "

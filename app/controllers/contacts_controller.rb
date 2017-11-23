@@ -4,6 +4,18 @@ class ContactsController < ApplicationController
     if params[:first_name_search]
       contacts = contacts.where("first_name ILIKE ?", "%#{params[:first_name_search]}%")
     end
+    if params[:middle_name_search]
+      contacts = contacts.where("middle_name ILIKE ?", "%#{params[:middle_name_search]}%")
+    end
+    if params[:last_name_search]
+      contacts = contacts.where("last_name ILIKE ?", "%#{params[:last_name_search]}%")
+    end
+    if params[:email_search]
+      contacts = contacts.where("email ILIKE ?", "%#{params[:email_search]}%")
+    end
+    if params[:phone_number_search]
+      contacts = contacts.where("phone_number ILIKE ?", "%#{params[:phone_number_search]}%")
+    end
     render json: contacts.as_json
   end 
   def create
