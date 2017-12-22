@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  get "/contact" => "contacts#index"
+
+  post 'user_token' => 'user_token#create'
+  post "/users" => "users#create"
+
+  get "/contacts" => "contacts#index"
   post "/contact" => "contacts#create"
   get "/contact/:id" => "contacts#show"
   patch "/contact/:id" => "contacts#update"
