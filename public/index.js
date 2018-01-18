@@ -5,7 +5,8 @@ var HomePage = {
   data: function() {
     return {
       message: "Welcome to Vue.js!",
-      contacts: []
+      contacts: [],
+      currentContact: {}
     };
   },
   created: function() {
@@ -15,8 +16,45 @@ var HomePage = {
       }.bind(this)
     );
   },
-  methods: {},
+  methods: {
+    setCurrentContact: function(inputContact) {
+      this.currentContact = inputContact;
+    }
+  },
   computed: {}
+};
+
+var ContactsEditPage = {
+  template: "#contacts-edit-page",
+  data: function() {
+    return {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      errors: []
+    };
+  },
+  methods: {
+    submit: function() {
+      var params = {
+        first_name: this.firstName,
+        last_name: this.lastName,
+        email: this.email,
+        phone_number: this.phoneNumber
+      };
+      axios
+        .patch("/contact/" + this.$route.params.id, params)
+        .then(function(response) {
+          router.push("/");
+        })
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
+  }
 };
 
 var NewContactPage = {
@@ -93,12 +131,47 @@ var LogoutPage = {
   }
 };
 
+var NewUserPage = {
+  template: "#new-user-page",
+  data: function() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+      errors: []
+    };
+  },
+  methods: {
+    submit: function() {
+      var params = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.passwordConfirmation
+      };
+      axios
+        .post("/users", params)
+        .then(function(response) {
+          router.push("/");
+        })
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
+  }
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/contacts/new", component: NewContactPage },
     { path: "/contacts/login", component: LoginPage },
-    { path: "/contacts/logout", component: LogoutPage }
+    { path: "/contacts/logout", component: LogoutPage },
+    { path: "/contacts/newUser", component: NewUserPage },
+    { path: "/contacts/:id/edit", component: ContactsEditPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

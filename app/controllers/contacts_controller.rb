@@ -1,7 +1,7 @@
 class ContactsController < ApplicationController
   # before_action :authenticate_user, except: [:index, :show]
   def index 
-    contacts = Contact.all #current_user.contact
+    contacts = Contact.all.order(:id => :asc) #current_user.contact
     if params[:first_name_search]
       contacts = contacts.where("first_name ILIKE ?", "%#{params[:first_name_search]}%")
     end
