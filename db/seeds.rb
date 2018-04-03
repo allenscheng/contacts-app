@@ -5,12 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-# => the .create is just a shortcut for Contact.new and contact.save
 
+
+
+# => the .create is just a shortcut for Contact.new and contact.save
 # => make to kill the server then use rails db:drop to remove everything in the database
 # => 
-contact = Contact.new(first_name: "Mike", last_name: "Lakes", email: "MikeLakes@gmail.com", phone_number: "123-453-8488")
-contact.save
 
-contact = Contact.new(first_name: "Jill", last_name: "Larks", email: "JillLarks@gmail.com", phone_number: "343-434-3456")
-contact.save
+# contact = Contact.create(first_name: "John", last_name: "Doe", email: "JohnDoe@email.com", phone_number: "123-456-7890")
