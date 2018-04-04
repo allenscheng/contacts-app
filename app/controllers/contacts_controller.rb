@@ -1,7 +1,8 @@
 class ContactsController < ApplicationController
   # before_action :authenticate_user, except: [:index, :show]
   def index 
-    contacts = Contact.all.order(:id => :asc) #current_user.contact
+    # contacts = Contact.all.order(:id => :asc) #current_user.contact
+    contacts = Contact.all.where(:user_id => current_user.id) #current_user.contact
     if params[:first_name_search]
       contacts = contacts.where("first_name ILIKE ?", "%#{params[:first_name_search]}%")
     end
@@ -27,7 +28,7 @@ class ContactsController < ApplicationController
       email:params["email"], 
       phone_number:params["phone_number"],
       bio:params["bio"], 
-      # user_id: current_user.id 
+      user_id: current_user.id 
       ) 
     if contact.save
       render json: contact.as_json
